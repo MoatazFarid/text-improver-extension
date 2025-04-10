@@ -6,7 +6,7 @@ export const saveToStorage = async (data) => {
         await new Promise((resolve, reject) => {
             chrome.storage.local.set(data, () => {
                 if (chrome.runtime.lastError) {
-                    reject(chrome.runtime.lastError);
+                    reject(new Error(chrome.runtime.lastError.message));
                 } else {
                     resolve();
                 }
@@ -23,8 +23,14 @@ export const saveToStorage = async (data) => {
 export const loadFromStorage = async (keys) => {
     try {
         log('Loading from storage:', keys);
-        const data = await new Promise(resolve => {
-            chrome.storage.local.get(keys, resolve);
+        const data = await new Promise((resolve, reject) => {
+            chrome.storage.local.get(keys, (result) => {
+                if (chrome.runtime.lastError) {
+                    reject(new Error(chrome.runtime.lastError.message));
+                } else {
+                    resolve(result);
+                }
+            });
         });
         log('Load successful:', Object.keys(data));
         return data;
