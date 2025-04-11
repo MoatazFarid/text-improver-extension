@@ -1,6 +1,6 @@
 # Text Improver Chrome Extension
 
-A Chrome extension that uses OpenAI's GPT-3.5 to enhance text with multiple improvement options.
+A Chrome extension that uses OpenAI's GPT-4o Mini to enhance text with multiple improvement options.
 
 ## Features
 
@@ -8,14 +8,17 @@ A Chrome extension that uses OpenAI's GPT-3.5 to enhance text with multiple impr
   - ✨ Improve Text - Enhances writing while maintaining meaning
   - 📨 Convert to E-mail - Transforms text into professional email format
   - 📝 Proofread Only - Corrects grammar, spelling, and punctuation
+  - 💡 Generate Response Ideas - Suggests different ways to respond to a text
+  - 💼 LinkedIn Response Ideas - Generates professional response ideas for LinkedIn
   - 🔄 Translate to Arabic - Translates text to Arabic
   - 🔄 Translate to English - Translates text to English
-- OpenAI GPT-3.5 Turbo powered text enhancement
+- OpenAI GPT-4o Mini powered text enhancement
 - Interactive floating tooltip interface:
   - Draggable positioning
   - Copy to clipboard
   - Replace original text
   - Color-coded actions
+  - Clickable response ideas
 - Secure API key storage
 - Customizable prompts for each action
 - Rate limiting to prevent excessive API usage
@@ -72,6 +75,8 @@ The extension comes with carefully crafted default prompts for each action:
 - **Improve Text**: Enhances text while maintaining original meaning
 - **Email Conversion**: Transforms text into professional email format
 - **Proofreading**: Focuses on grammar, spelling, and punctuation
+- **Response Ideas**: Generates different approaches to respond to text
+- **LinkedIn Response Ideas**: Generates professional action-oriented response ideas for LinkedIn
 - **Translation**: Maintains tone and meaning during translation
 
 You can customize these prompts in the options page to better suit your needs.
@@ -84,20 +89,33 @@ You can customize these prompts in the options page to better suit your needs.
   - "Improve Text" for general enhancement
   - "Convert to E-mail" for professional email format
   - "Proofread Only" for grammar and spelling
+  - "Generate Response Ideas" for different ways to respond
+  - "LinkedIn Response Ideas" for professional LinkedIn responses
   - "Translate to Arabic" for English to Arabic translation
   - "Translate to English" for Arabic to English translation
-4. A tooltip will appear with the improved text
+4. A tooltip will appear with the improved text or response ideas
 5. You can:
     - Copy the improved text to clipboard
     - Replace the original text with the improved version
+    - Click on response ideas to generate a complete response
     - Drag the tooltip to a different position
     - Close the tooltip when done
 
 Each action has its own color-coded indicator for easy identification:
-- 🟢 Green: Text Improvement
+- 🟢 Green: Text Improvement and Response Ideas
 - 🔵 Blue: Email Conversion
 - 🟠 Orange: Proofreading
 - 🟣 Purple: Translation
+
+### Response Ideas Feature
+
+The response ideas feature offers a two-step approach:
+1. First, it generates multiple ideas for how to respond to the selected text
+2. Each idea is presented as a clickable button
+3. When you click on an idea, it generates a complete response based on that approach
+4. You can then copy or replace the original text with your chosen response
+
+The LinkedIn Response Ideas feature works similarly but is specifically designed for professional networking contexts, generating action-oriented response ideas.
 
 ## Development
 
