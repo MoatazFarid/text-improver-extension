@@ -22,6 +22,30 @@ async function getPrompts() {
         toEnglish: {
             system: "You are a professional translator specializing in Arabic to English translation.",
             user: (text) => `Please translate this text to English, maintaining the tone and meaning: ${text}`
+        },
+        generateIdeas: {
+            system: "You are a creative assistant that generates response ideas based on provided text.",
+            user: (text) => `Based on this text, generate 3-5 different ways to respond. For each idea, provide a short title and a brief description of the response approach: ${text}`
+        },
+        linkedInIdeas: {
+            system: "You are a professional networking assistant helping craft LinkedIn responses.",
+            user: (text) => `You're helping me respond to a LinkedIn post or comment. I'll give you the post text, and you'll generate ideas for how I might respond in my own voice. Each idea should be written as an action I should take, starting with a verb in active voice, such as:
+
+"Congratulate Alex on..."
+
+"Show empathy about..."
+
+"Express concern for..."
+
+"Acknowledge the effort in..."
+
+"Ask a follow-up about..."
+
+"Share a personal insight related to..."
+
+Do not write the actual reply yet—just list response ideas based on the post I provide. Assume I am speaking, not narrating about someone else. Keep the tone thoughtful, professional, and human.
+
+Here's the post: ${text}`
         }
     };
 
@@ -60,6 +84,20 @@ function createContextMenu() {
                 id: "proofread",
                 parentId: "textImprover",
                 title: "📝 Proofread Only",
+                contexts: ["selection"]
+            });
+
+            chrome.contextMenus.create({
+                id: "generateIdeas",
+                parentId: "textImprover",
+                title: "💡 Generate Response Ideas",
+                contexts: ["selection"]
+            });
+
+            chrome.contextMenus.create({
+                id: "linkedInIdeas",
+                parentId: "textImprover",
+                title: "💼 LinkedIn Response Ideas",
                 contexts: ["selection"]
             });
 
@@ -124,6 +162,19 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
             if (!prompt) {
                 throw new Error('Invalid action selected');
             }
+
+            // Store the current operation data
+            await chrome.storage.local.set({
+                currentOperation: {
+                    tabId: tab.id,
+                    action: info.menuItemId,
+                    text: info.selectionText,
+                    apiKey: response.apiKey,
+                    model: response.model,
+                    systemPrompt: prompt.system,
+                    userPrompt: prompt.user(info.selectionText)
+                }
+            });
 
             // Send message to content script
             chrome.tabs.sendMessage(tab.id, {
